@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
   ArrowRight,
   BadgeCheck,
   ChevronRight,
   Clock3,
+  X,
   Container,
   Facebook,
   Globe2,
@@ -76,22 +77,38 @@ function StoreButton({ store }) {
 }
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+  const links = ['Home', 'About', 'Services', 'How It Works', 'For Drivers', 'FAQ'];
+
   return (
     <nav className="navbar">
       <a className="brand" href="#home">
         <img className="brand-logo" src="/betaMuvlogo.png" alt="BetaMuv" />
       </a>
       <div className="nav-links">
-        {['Home', 'About', 'Services', 'How It Works', 'For Drivers', 'FAQ'].map((item) => (
+        {links.map((item) => (
           <a href={`#${item.toLowerCase().replaceAll(' ', '-')}`} key={item}>
             {item}
           </a>
         ))}
       </div>
       <a className="nav-cta" href="#download">Download App</a>
-      <button className="menu-btn" aria-label="Open menu">
-        <Menu size={22} />
+      <button className="menu-btn" type="button" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
+        {open ? <X size={22} /> : <Menu size={22} />}
       </button>
+      <motion.div
+        className="mobile-menu"
+        initial={false}
+        animate={open ? { opacity: 1, y: 0, pointerEvents: 'auto' } : { opacity: 0, y: -12, pointerEvents: 'none' }}
+        transition={{ duration: 0.22 }}
+      >
+        {links.map((item) => (
+          <a href={`#${item.toLowerCase().replaceAll(' ', '-')}`} key={item} onClick={() => setOpen(false)}>
+            {item}
+          </a>
+        ))}
+        <a className="mobile-menu-cta" href="#download" onClick={() => setOpen(false)}>Download App</a>
+      </motion.div>
     </nav>
   );
 }
@@ -551,16 +568,39 @@ function FinalCTA() {
   return (
     <section className="final-cta">
       <Reveal className="final-card">
-        <div className="final-image"><img src={images.final} alt="Logistics truck on the move" /></div>
         <div className="final-panel">
           <div className="mega-type small">BETAMUV</div>
-          <p className="eyebrow">Ready to Move?</p>
-          <h2>Download BetaMuv.</h2>
-          <p>Join thousands of Nigerians sending goods safely and earning as verified drivers, all from one powerful, easy-to-use app.</p>
+          <p className="eyebrow">Streamline Your Haulage Today</p>
+          <h2>Move with confidence from pickup to drop-off.</h2>
+          <p>Book verified drivers, compare vehicle options, track every trip, and keep payments protected until delivery is confirmed.</p>
           <div className="store-row">
             <StoreButton store="apple" />
             <StoreButton store="google" />
           </div>
+        </div>
+        <div className="final-action-board">
+          <motion.div className="final-orbit" animate={{ rotate: 360 }} transition={{ duration: 24, repeat: Infinity, ease: 'linear' }} />
+          <motion.div className="final-board-card active" animate={{ y: [0, -10, 0] }} transition={{ duration: 4.5, repeat: Infinity }}>
+            <Route size={24} />
+            <div>
+              <strong>Yaba to Lekki</strong>
+              <span>Home relocation request</span>
+            </div>
+          </motion.div>
+          <motion.div className="final-board-card" animate={{ y: [0, 12, 0] }} transition={{ duration: 5.2, repeat: Infinity }}>
+            <Truck size={24} />
+            <div>
+              <strong>3 verified options</strong>
+              <span>Pickup van · mini truck · cargo van</span>
+            </div>
+          </motion.div>
+          <motion.div className="final-board-card" animate={{ x: [0, 10, 0] }} transition={{ duration: 5.8, repeat: Infinity }}>
+            <ShieldCheck size={24} />
+            <div>
+              <strong>Payment protected</strong>
+              <span>Released after safe delivery</span>
+            </div>
+          </motion.div>
         </div>
       </Reveal>
     </section>
@@ -568,6 +608,8 @@ function FinalCTA() {
 }
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer" id="contact">
       <div className="footer-word">BETAMUV</div>
@@ -598,7 +640,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© 2025 Betamuv Ltd. All rights reserved.</span>
+        <span>© {currentYear} Betamuv Ltd. All rights reserved.</span>
         <span>Terms · Privacy</span>
       </div>
     </footer>

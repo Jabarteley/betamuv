@@ -122,6 +122,43 @@ section {
   color: #fff;
 }
 
+.mobile-menu {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 72px;
+  z-index: 10;
+  display: none;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.86);
+  padding: 14px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.mobile-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  border-radius: 14px;
+  padding: 0 14px;
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 750;
+}
+
+.mobile-menu a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.mobile-menu .mobile-menu-cta {
+  justify-content: center;
+  margin-top: 8px;
+  background: var(--orange);
+  color: #fff;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -1722,29 +1759,33 @@ h1 span {
 }
 
 .final-cta {
-  background: var(--cream);
+  background:
+    radial-gradient(circle at 76% 35%, rgba(255, 85, 0, 0.14), transparent 24rem),
+    var(--cream);
 }
 
 .final-card {
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
-  min-height: 560px;
+  grid-template-columns: 1fr 0.9fr;
+  min-height: 540px;
   border-radius: 32px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  background: var(--black);
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.22);
 }
 
-.final-image,
 .final-panel {
   position: relative;
-  min-height: 460px;
+  min-height: 540px;
   overflow: hidden;
 }
 
 .final-panel {
-  background: var(--navy);
+  background:
+    radial-gradient(circle at 10% 15%, rgba(255, 85, 0, 0.2), transparent 19rem),
+    var(--black);
   color: #fff;
   padding: clamp(32px, 6vw, 74px);
   display: flex;
@@ -1755,6 +1796,67 @@ h1 span {
 
 .final-panel p:not(.eyebrow) {
   color: rgba(255, 255, 255, 0.72);
+}
+
+.final-action-board {
+  position: relative;
+  min-height: 540px;
+  padding: clamp(28px, 5vw, 58px);
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(135deg, #151515, #050505);
+  background-size: 42px 42px, 42px 42px, auto;
+  overflow: hidden;
+}
+
+.final-orbit {
+  position: absolute;
+  right: -90px;
+  top: -90px;
+  width: 310px;
+  height: 310px;
+  border-radius: 999px;
+  border: 1px dashed rgba(255, 85, 0, 0.36);
+}
+
+.final-board-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  padding: 18px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+.final-board-card.active {
+  background: rgba(255, 85, 0, 0.18);
+  border-color: rgba(255, 85, 0, 0.38);
+}
+
+.final-board-card svg {
+  flex: 0 0 auto;
+  color: var(--orange);
+}
+
+.final-board-card strong,
+.final-board-card span {
+  display: block;
+}
+
+.final-board-card span {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.9rem;
 }
 
 .mega-type.small {
@@ -1869,6 +1971,10 @@ h1 span {
     place-items: center;
   }
 
+  .mobile-menu {
+    display: grid;
+  }
+
   .solution-track,
   .process-grid,
   .business-grid {
@@ -1917,7 +2023,7 @@ h1 span {
   }
 
   .navbar {
-    padding: 14px 14px 0 54px;
+    padding: 14px 14px 0;
   }
 
   .brand-logo {
@@ -1980,6 +2086,7 @@ h1 span {
   .solution-track {
     display: flex;
     overflow-x: auto;
+    gap: 16px;
     padding-bottom: 18px;
     scroll-snap-type: x mandatory;
   }
@@ -1991,6 +2098,7 @@ h1 span {
   .solution-card {
     min-width: min(82vw, 360px);
     scroll-snap-align: center;
+    margin-top: 0 !important;
   }
 
   .process-grid,
@@ -2003,7 +2111,7 @@ h1 span {
     display: none;
   }
 
-.driver-visual .phone-shell {
+  .driver-visual .phone-shell {
     display: none;
   }
 
@@ -2051,6 +2159,15 @@ h1 span {
 
   .final-card {
     min-height: unset;
+  }
+
+  .final-panel,
+  .final-action-board {
+    min-height: 420px;
+  }
+
+  .final-action-board {
+    padding: 24px;
   }
 
   .footer-bottom {
