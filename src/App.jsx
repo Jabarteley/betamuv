@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 const images = {
-  hero: '/images/betamuv-hero-truck.png',
+  hero: '/images/betamuv-hero-truck.webp',
   port: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1400&q=85',
   truck: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=85',
   warehouse: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85',
@@ -127,7 +127,7 @@ function Hero() {
           <Navbar />
         </div>
         <div className="hero-media">
-          <motion.img src={images.hero} alt="Cargo trucks on a ship" animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }} />
+          <motion.img src={images.hero} alt="BetaMuv branded haulage truck on a city road" loading="eager" fetchPriority="high" decoding="async" animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }} />
           <div className="hero-overlay" />
           <motion.div className="hero-copy" variants={stagger} initial="hidden" animate="visible">
             <motion.p variants={fadeUp} className="eyebrow">Now Live Across Nigeria</motion.p>
@@ -292,7 +292,7 @@ function AboutStory() {
     <section className="about-story white-section" id="about">
       <Reveal className="about-panel">
         <div className="about-media">
-          <img src={images.truck} alt="Truck moving goods through the city" />
+          <img src={images.truck} alt="Truck moving goods through the city" loading="lazy" decoding="async" />
           <motion.div className="about-chip" animate={{ y: [0, -10, 0] }} transition={{ duration: 4.8, repeat: Infinity }}>
             <Truck size={22} />
             <span>Verified drivers and transporters</span>
@@ -332,7 +332,7 @@ function SolutionCards() {
       <motion.div className="solution-track" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         {cards.map(([num, title, text, img, Icon], index) => (
           <motion.article className={`solution-card ${index === 1 ? 'is-featured' : ''}`} variants={fadeUp} whileHover={{ y: -12, scale: index === 1 ? 1.035 : 1.02 }} key={title}>
-            <img src={img} alt="" />
+            <img src={img} alt="" loading="lazy" decoding="async" />
             <div className="card-shade" />
             <motion.div className="solution-motion-icon" animate={{ y: [0, -12, 0], rotate: [0, 5, 0] }} transition={{ duration: 3.4 + index, repeat: Infinity }}>
               <PackageCheck size={22} />
@@ -525,7 +525,7 @@ function Articles() {
       <motion.div className="article-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         {posts.map(([title, text, img], index) => (
           <motion.article className="article-card" variants={fadeUp} whileHover={{ y: -8 }} key={title}>
-            <div className="article-image"><img src={img} alt="" /></div>
+            <div className="article-image"><img src={img} alt="" loading="lazy" decoding="async" /></div>
             <span>November {5 + index}, 2026</span>
             <h3>{title}</h3>
             <p>{text}</p>
