@@ -28,7 +28,7 @@ import {
 const images = {
   hero: '/images/betamuv-hero-truck.webp',
   port: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1400&q=85',
-  truck: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=85',
+  truck: '/images/betamuv-mini-truck.png',
   warehouse: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85',
   cargo: 'https://images.pexels.com/photos/34156526/pexels-photo-34156526.jpeg?auto=compress&cs=tinysrgb&w=1400',
   final: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&fit=crop&w=1400&q=85',
