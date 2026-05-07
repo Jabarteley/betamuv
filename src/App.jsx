@@ -396,8 +396,35 @@ function DriverSection() {
         </ul>
         <Button>Register as a Driver</Button>
       </Reveal>
-      <motion.div className="driver-benefits" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-        <PhoneMockup compact />
+      <motion.div className="driver-visual" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+        <motion.div className="earnings-panel" variants={fadeUp}>
+          <div className="earnings-top">
+            <span>Driver Dashboard</span>
+            <strong>₦248,600</strong>
+            <small>This month earnings</small>
+          </div>
+          <div className="earnings-bars">
+            {[58, 86, 44, 72, 94, 64].map((height, index) => (
+              <motion.i key={height} initial={{ height: 18 }} whileInView={{ height }} viewport={{ once: true }} transition={{ duration: 0.9, delay: index * 0.08 }} />
+            ))}
+          </div>
+          <motion.div className="job-ticket" animate={{ x: [0, 8, 0] }} transition={{ duration: 4, repeat: Infinity }}>
+            <Truck size={22} />
+            <div>
+              <strong>Lagos → Ibadan</strong>
+              <small>Furniture delivery · ₦36,000</small>
+            </div>
+            <b>Accept</b>
+          </motion.div>
+          <motion.div className="job-ticket second" animate={{ x: [0, -8, 0] }} transition={{ duration: 4.5, repeat: Infinity }}>
+            <Container size={22} />
+            <div>
+              <strong>Aba → Lagos</strong>
+              <small>Bulk cargo · ₦145,000</small>
+            </div>
+            <b>New</b>
+          </motion.div>
+        </motion.div>
         {benefits.map(([title, text]) => (
           <motion.article className="driver-benefit" variants={fadeUp} key={title}>
             <Truck size={26} />
