@@ -281,6 +281,9 @@ function SolutionCards() {
   ];
   return (
     <section className="solutions" id="features">
+      <motion.div className="story-route story-route-one" aria-hidden="true">
+        <motion.span animate={{ x: ['-10%', '110%'] }} transition={{ duration: 9, repeat: Infinity, ease: 'linear' }}><Truck size={34} /></motion.span>
+      </motion.div>
       <Reveal className="section-heading center">
         <p className="eyebrow">Shipping Solutions</p>
         <h2>Shipping Solutions That Fit Every Need, Anywhere</h2>
@@ -291,6 +294,9 @@ function SolutionCards() {
           <motion.article className={`solution-card ${index === 1 ? 'is-featured' : ''}`} variants={fadeUp} whileHover={{ y: -12, scale: index === 1 ? 1.035 : 1.02 }} key={title}>
             <img src={img} alt="" />
             <div className="card-shade" />
+            <motion.div className="solution-motion-icon" animate={{ y: [0, -12, 0], rotate: [0, 5, 0] }} transition={{ duration: 3.4 + index, repeat: Infinity }}>
+              <PackageCheck size={22} />
+            </motion.div>
             <span>{num}</span>
             <Icon size={30} />
             <h3>{title}</h3>
@@ -312,6 +318,7 @@ function ProcessSection() {
   return (
     <section className="process dark-section" id="how-it-works">
       <div className="map-texture" />
+      <div className="process-radar" aria-hidden="true"><Radar size={220} /></div>
       <Reveal className="section-heading">
         <p className="eyebrow">How It Works</p>
         <h2>Simple. Fast. Reliable.</h2>
@@ -322,6 +329,7 @@ function ProcessSection() {
           <motion.article className="process-card" variants={fadeUp} key={title}>
             <span className="step-num">{index + 1}</span>
             <div className="step-icon"><Icon size={25} /></div>
+            <motion.div className="step-progress" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: index * 0.2 }} />
             <h3>{title}</h3>
             <p>{text}</p>
           </motion.article>
@@ -333,10 +341,10 @@ function ProcessSection() {
 
 function BusinessLogistics() {
   const features = [
-    [Radar, 'Real-Time Tracking'],
-    [ShieldCheck, 'Cargo Insurance'],
-    [Clock3, 'Flexible Scheduling'],
-    [BadgeCheck, 'Verified Drivers Only']
+    [Radar, 'Real-Time Tracking', 'Precise GPS movement, route status, and delivery milestones in one glance.'],
+    [ShieldCheck, 'Cargo Insurance', 'Optional cover up to ₦20,000,000 for theft, damage, or loss.'],
+    [Clock3, 'Flexible Scheduling', 'Book instantly or schedule ahead for repeat business movement.'],
+    [BadgeCheck, 'Verified Drivers Only', 'Identity checks, licence validation, and vehicle review before every driver goes live.']
   ];
   return (
     <section className="business white-section">
@@ -350,10 +358,12 @@ function BusinessLogistics() {
         </Reveal>
       </div>
       <motion.div className="business-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-        {features.map(([Icon, title]) => (
+        {features.map(([Icon, title, text], index) => (
           <motion.div className="business-feature" variants={fadeUp} whileHover={{ y: -8 }} key={title}>
+            <motion.span className="feature-orbit" animate={{ rotate: 360 }} transition={{ duration: 10 + index * 2, repeat: Infinity, ease: 'linear' }} />
             <Icon size={27} />
             <h3>{title}</h3>
+            <p>{text}</p>
             <ChevronRight size={20} />
           </motion.div>
         ))}
@@ -371,6 +381,9 @@ function DriverSection() {
   return (
     <section className="drivers-section dark-section" id="for-drivers">
       <div className="map-texture" />
+      <motion.div className="driver-road" aria-hidden="true">
+        <motion.span animate={{ x: ['-20%', '120%'] }} transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}><Truck size={42} /></motion.span>
+      </motion.div>
       <Reveal className="driver-copy">
         <p className="eyebrow">For Drivers & Transporters</p>
         <h2>Turn Your Truck Into a Career.</h2>
@@ -384,6 +397,7 @@ function DriverSection() {
         <Button>Register as a Driver</Button>
       </Reveal>
       <motion.div className="driver-benefits" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+        <PhoneMockup compact />
         {benefits.map(([title, text]) => (
           <motion.article className="driver-benefit" variants={fadeUp} key={title}>
             <Truck size={26} />
@@ -405,6 +419,11 @@ function TrustSection() {
   ];
   return (
     <section className="trust-section white-section">
+      <div className="trust-illustration" aria-hidden="true">
+        <motion.span animate={{ y: [0, -18, 0] }} transition={{ duration: 4.8, repeat: Infinity }}><ShieldCheck size={68} /></motion.span>
+        <motion.span animate={{ y: [0, 16, 0] }} transition={{ duration: 5.5, repeat: Infinity }}><FileCheck2 size={54} /></motion.span>
+        <motion.span animate={{ y: [0, -12, 0] }} transition={{ duration: 4.2, repeat: Infinity }}><PackageCheck size={58} /></motion.span>
+      </div>
       <Reveal className="section-heading center">
         <p className="eyebrow">Why BetaMuv</p>
         <h2>Built for Trust. Backed by Safety.</h2>
