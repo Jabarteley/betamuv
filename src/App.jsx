@@ -1,9 +1,8 @@
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
   ArrowRight,
   BadgeCheck,
-  Boxes,
-  Building2,
-  ChartNoAxesCombined,
   ChevronRight,
   Clock3,
   Container,
@@ -13,7 +12,6 @@ import {
   Instagram,
   Linkedin,
   LocateFixed,
-  MapPin,
   Menu,
   PackageCheck,
   Plane,
@@ -27,9 +25,6 @@ import {
   Twitter,
   Warehouse
 } from 'lucide-react';
-import React from 'react';
-import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
 
 const images = {
   hero: 'https://images.pexels.com/photos/26569137/pexels-photo-26569137.jpeg?auto=compress&cs=tinysrgb&w=1800',
@@ -50,26 +45,32 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.12 } }
 };
 
-function Reveal({ children, className = '', delay = 0 }) {
+function Reveal({ children, className = '' }) {
   return (
-    <motion.div
-      className={className}
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-90px' }}
-      transition={{ delay }}
-    >
+    <motion.div className={className} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-90px' }}>
       {children}
     </motion.div>
   );
 }
 
-function Button({ children, variant = 'primary' }) {
+function Button({ children, variant = 'primary', href = '#download' }) {
   return (
-    <motion.a href="#tracking" className={`btn ${variant}`} whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
+    <motion.a href={href} className={`btn ${variant}`} whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
       {children}
       <ArrowRight size={17} />
+    </motion.a>
+  );
+}
+
+function StoreButton({ store }) {
+  const apple = store === 'apple';
+  return (
+    <motion.a className="store-button" href="#download" whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
+      <span className="store-icon">{apple ? 'A' : 'G'}</span>
+      <span>
+        <small>{apple ? 'Download on the' : 'Get it on'}</small>
+        <strong>{apple ? 'App Store' : 'Google Play'}</strong>
+      </span>
     </motion.a>
   );
 }
@@ -77,12 +78,12 @@ function Button({ children, variant = 'primary' }) {
 function Navbar() {
   return (
     <nav className="navbar">
-      <a className="brand" href="#">
+      <a className="brand" href="#home">
         <span className="brand-mark">B</span>
         BetaMuv
       </a>
       <div className="nav-links">
-        {['Home', 'How It Works', 'Features', 'For Drivers', 'Tracking', 'Contact'].map((item) => (
+        {['Home', 'How It Works', 'Features', 'For Drivers', 'FAQ'].map((item) => (
           <a href={`#${item.toLowerCase().replaceAll(' ', '-')}`} key={item}>
             {item}
           </a>
@@ -113,29 +114,33 @@ function Hero() {
           <motion.img src={images.hero} alt="Cargo trucks on a ship" animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }} />
           <div className="hero-overlay" />
           <motion.div className="hero-copy" variants={stagger} initial="hidden" animate="visible">
-            <motion.p variants={fadeUp} className="eyebrow">Real-time transport network</motion.p>
+            <motion.p variants={fadeUp} className="eyebrow">Now Live Across Nigeria</motion.p>
             <motion.h1 variants={fadeUp}>Move Anything.<span>Anywhere in Nigeria.</span></motion.h1>
             <motion.p variants={fadeUp} className="hero-sub">
-              BetaMuv connects individuals and businesses with verified transporters for fast, secure, and trackable deliveries across Nigeria.
+              BetaMuv connects you with verified delivery drivers on demand. Book, track, and ship your goods safely across all 36 states at transparent prices.
             </motion.p>
             <motion.div variants={fadeUp} className="hero-actions">
-              <Button>Book a Delivery</Button>
-              <Button variant="ghost">Become a Driver</Button>
+              <Button>Download the App</Button>
+              <Button href="#how-it-works" variant="ghost">See How It Works</Button>
+            </motion.div>
+            <motion.div variants={fadeUp} className="store-row">
+              <StoreButton store="apple" />
+              <StoreButton store="google" />
             </motion.div>
           </motion.div>
           <RouteMap />
           <motion.div className="float-card tracking-card" animate={{ y: [0, -14, 0] }} transition={{ duration: 5.5, repeat: Infinity }}>
             <span className="pulse" />
             <div>
-              <strong>BMV-2498</strong>
-              <p>Ibadan to Lagos, live</p>
+              <strong>Live Tracking</strong>
+              <p>En Route</p>
             </div>
           </motion.div>
           <motion.div className="float-card status-card" animate={{ y: [0, 12, 0] }} transition={{ duration: 6, repeat: Infinity }}>
             <PackageCheck size={28} />
             <div>
-              <strong>Delivery secured</strong>
-              <p>ETA 42 minutes</p>
+              <strong>Delivered</strong>
+              <p>₦14,500 secured</p>
             </div>
           </motion.div>
           <div className="mega-type">BETAMUV</div>
@@ -177,7 +182,7 @@ function AnimatedNumber({ value, suffix = '' }) {
 
 function Stats() {
   const stats = [
-    [Clock3, 10, 'K+', 'Deliveries Completed'],
+    [Clock3, 10, 'K+', 'Deliveries Made'],
     [BadgeCheck, 500, '+', 'Verified Drivers'],
     [Globe2, 36, '', 'States Covered'],
     [Star, 4.8, '★', 'Average Rating']
@@ -188,11 +193,84 @@ function Stats() {
         {stats.map(([Icon, value, suffix, label]) => (
           <motion.div className="stat" variants={fadeUp} key={label}>
             <Icon size={30} />
-            <strong>{label === 'Average Rating' ? '4.8★' : <AnimatedNumber value={value} suffix={suffix} />}</strong>
+            <strong>{label === 'Average Rating' ? '4.8 ★' : <AnimatedNumber value={value} suffix={suffix} />}</strong>
             <span>{label}</span>
           </motion.div>
         ))}
       </motion.div>
+    </section>
+  );
+}
+
+function PhoneMockup({ compact = false }) {
+  return (
+    <motion.div className={`phone-shell ${compact ? 'compact' : ''}`} animate={{ y: [0, -12, 0], rotate: compact ? [0, -1, 0] : [0, 1, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}>
+      <div className="phone-notch" />
+      <div className="phone-screen">
+        <div className="app-top">
+          <div>
+            <small>BETAMUV</small>
+            <strong>Book a Delivery</strong>
+          </div>
+          <span>● En Route</span>
+        </div>
+        <div className="mini-map">
+          <RouteMap />
+          <div className="map-pin pickup">Pickup</div>
+          <div className="map-pin dropoff">Dropoff</div>
+        </div>
+        <div className="route-fields">
+          <div>
+            <small>Pickup</small>
+            <strong>Victoria Island, Lagos</strong>
+          </div>
+          <div>
+            <small>Destination</small>
+            <strong>Ikeja, Lagos</strong>
+          </div>
+        </div>
+        <div className="driver-panel">
+          <small>AVAILABLE DRIVERS</small>
+          <div className="driver-row">
+            <span>AO</span>
+            <div>
+              <strong>Adebayo Okafor</strong>
+              <p>Pickup Truck · 1.8 km away</p>
+            </div>
+            <b>★ 4.9</b>
+          </div>
+          <button>Book Now</button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function MobileAppShowcase() {
+  return (
+    <section className="app-showcase" id="download">
+      <div className="app-showcase-word">MOBILE</div>
+      <Reveal className="app-copy">
+        <p className="eyebrow">Download App</p>
+        <h2>The mobile app is where every move happens.</h2>
+        <p>Book nearby drivers, compare prices, track live, insure cargo, and confirm delivery from one clean BetaMuv experience.</p>
+        <div className="store-row dark">
+          <StoreButton store="apple" />
+          <StoreButton store="google" />
+        </div>
+      </Reveal>
+      <Reveal className="app-visual">
+        <div className="phone-halo" />
+        <PhoneMockup />
+        <motion.div className="app-float payout-card" animate={{ y: [0, 12, 0] }} transition={{ duration: 5, repeat: Infinity }}>
+          <strong>Live Tracking</strong>
+          <span>Victoria Island to Ikeja</span>
+        </motion.div>
+        <motion.div className="app-float price-card" animate={{ y: [0, -12, 0] }} transition={{ duration: 5.8, repeat: Infinity }}>
+          <strong>₦14,500</strong>
+          <span>Transparent fare</span>
+        </motion.div>
+      </Reveal>
     </section>
   );
 }
@@ -229,23 +307,23 @@ function SolutionCards() {
 
 function ProcessSection() {
   const steps = [
-    [Route, 'Request Pickup', 'Set pickup, destination, item type, and preferred delivery window.'],
-    [Truck, 'Match With Driver', 'Get paired with a verified transporter suited to your cargo.'],
-    [Radar, 'Track Movement', 'Follow your shipment with live status and route updates.'],
-    [ShieldCheck, 'Confirm Delivery', 'Close the trip only when the package arrives securely.']
+    [Route, 'Enter Your Route', 'Set your pickup and destination, describe your goods, and add special handling requirements.'],
+    [Truck, 'Compare & Book', 'Browse verified nearby drivers, prices, vehicle types, and ratings. Book in seconds.'],
+    [Radar, 'Track Live', 'Follow your delivery in real time on an interactive map with automatic status updates.'],
+    [ShieldCheck, 'Confirm & Rate', 'Confirm receipt, pay securely in-app, and rate your driver.']
   ];
   return (
     <section className="process dark-section" id="how-it-works">
       <div className="map-texture" />
       <Reveal className="section-heading">
-        <p className="eyebrow">How it works</p>
-        <h2>From Request to Delivery — Streamlined Every Step of the Way</h2>
-        <p>Book, match, track, and confirm your delivery from one simple platform.</p>
+        <p className="eyebrow">How It Works</p>
+        <h2>Simple. Fast. Reliable.</h2>
+        <p>Whether you're sending a parcel or earning as a driver, BetaMuv makes every step completely seamless.</p>
       </Reveal>
       <motion.div className="process-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         {steps.map(([Icon, title, text], index) => (
           <motion.article className="process-card" variants={fadeUp} key={title}>
-            <span className="step-num">0{index + 1}</span>
+            <span className="step-num">{index + 1}</span>
             <div className="step-icon"><Icon size={25} /></div>
             <h3>{title}</h3>
             <p>{text}</p>
@@ -258,20 +336,20 @@ function ProcessSection() {
 
 function BusinessLogistics() {
   const features = [
-    [Plane, 'Freight Forwarding'],
-    [PackageCheck, 'Last-Mile Delivery'],
-    [FileCheck2, 'Customs/Documentation Support'],
-    [ShieldCheck, 'Tracking & Insurance']
+    [Radar, 'Real-Time Tracking'],
+    [ShieldCheck, 'Cargo Insurance'],
+    [Clock3, 'Flexible Scheduling'],
+    [BadgeCheck, 'Verified Drivers Only']
   ];
   return (
     <section className="business white-section">
       <div className="business-top">
         <Reveal className="business-label">
-          <span>Business Logistics</span>
-          <p>Built for operational teams, merchants, and growing distribution networks.</p>
+          <span>Platform Features</span>
+          <p>BetaMuv packs powerful logistics tools into one clean, intuitive mobile app.</p>
         </Reveal>
         <Reveal className="business-title">
-          <h2>Smart logistics designed to power your business and keep your supply chain moving forward.</h2>
+          <h2>Everything you need, built right in.</h2>
         </Reveal>
       </div>
       <motion.div className="business-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -281,6 +359,67 @@ function BusinessLogistics() {
             <h3>{title}</h3>
             <ChevronRight size={20} />
           </motion.div>
+        ))}
+      </motion.div>
+    </section>
+  );
+}
+
+function DriverSection() {
+  const benefits = [
+    ['Instant Payouts', 'Earnings hit your wallet the moment delivery is confirmed. Withdraw to any Nigerian bank with no waiting.'],
+    ['Flexible Schedule', 'Go online when you want. Accept trips at your convenience. BetaMuv works around your life.'],
+    ['Thriving Community', 'Join a verified network of professional transporters across Nigeria and grow your reputation.']
+  ];
+  return (
+    <section className="drivers-section dark-section" id="for-drivers">
+      <div className="map-texture" />
+      <Reveal className="driver-copy">
+        <p className="eyebrow">For Drivers & Transporters</p>
+        <h2>Turn Your Truck Into a Career.</h2>
+        <p>Join hundreds of verified transporters already earning consistently on BetaMuv. Set your own hours, choose your jobs, and get paid instantly after every delivery.</p>
+        <ul>
+          <li>Steady flow of delivery jobs matched to your location</li>
+          <li>Instant earnings to your wallet after every delivery</li>
+          <li>Full earnings dashboard to track your income and history</li>
+          <li>Work your own schedule and be your own boss</li>
+        </ul>
+        <Button>Register as a Driver</Button>
+      </Reveal>
+      <motion.div className="driver-benefits" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+        {benefits.map(([title, text]) => (
+          <motion.article className="driver-benefit" variants={fadeUp} key={title}>
+            <Truck size={26} />
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </motion.article>
+        ))}
+      </motion.div>
+    </section>
+  );
+}
+
+function TrustSection() {
+  const items = [
+    ['₦20M', 'Maximum Insurance Coverage', 'Every shipment can be insured up to ₦20,000,000 against theft, damage, or loss.'],
+    ['100%', 'Driver Verification', 'Every driver undergoes ID checks, licence validation, and vehicle inspection before going live.'],
+    ['24/7', 'Emergency Support', 'An in-app emergency support button connects you instantly to a live support agent.'],
+    ['Free', 'No Sign-Up Fees', 'No subscriptions, no hidden charges. BetaMuv is completely free to download and join.']
+  ];
+  return (
+    <section className="trust-section white-section">
+      <Reveal className="section-heading center">
+        <p className="eyebrow">Why BetaMuv</p>
+        <h2>Built for Trust. Backed by Safety.</h2>
+        <p>Every feature exists to protect you, your goods, your money, and your time.</p>
+      </Reveal>
+      <motion.div className="trust-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+        {items.map(([value, title, text]) => (
+          <motion.article className="trust-card" variants={fadeUp} whileHover={{ y: -8 }} key={title}>
+            <strong>{value}</strong>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </motion.article>
         ))}
       </motion.div>
     </section>
@@ -309,32 +448,59 @@ function TrackingCTA() {
 
 function Testimonials() {
   const testimonials = [
-    ['Jennifer Adeyemi', 'Catering Business Owner', 'Lagos', 'BetaMuv helped us move event supplies across Lagos without the usual phone-call chaos. I could track everything from pickup to arrival.'],
-    ['Tunde Chukwu', 'Wholesale Trader', 'Aba', 'The interstate haulage matching is fast and transparent. It feels built for the way Nigerian businesses actually move goods.'],
-    ['Kunle Ogunleye', 'Verified Driver', 'Abuja', 'The platform gives drivers better jobs, cleaner communication, and customers who know exactly what is moving.']
+    ['Jennifer Adeyemi', 'Catering Business Owner', 'Lagos', 'BetaMuv completely changed how I handle my catering logistics. I booked a truck in under 3 minutes and tracked it all the way to the venue.'],
+    ['Kunle Ogunleye', 'Verified Driver', 'Abuja', "I've been driving with BetaMuv for four months. Jobs are consistent, and I get paid immediately after every delivery."],
+    ['Tunde Chukwu', 'Wholesale Trader', 'Aba', 'We use BetaMuv to move stock between our Aba warehouse and Lagos store. The pricing is clear, the drivers are professional, and the insurance option gives real confidence.']
   ];
   return (
     <section className="testimonials white-section">
       <Reveal className="section-heading center">
-        <p className="eyebrow">Customer stories</p>
-        <h2>Trusted by businesses and everyday senders across Nigeria.</h2>
+        <p className="eyebrow">What People Are Saying</p>
+        <h2>Loved by senders and drivers across Nigeria.</h2>
       </Reveal>
       <motion.div className="testimonial-row" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         {testimonials.map(([name, type, location, quote], index) => (
           <motion.article className={`testimonial ${index === 0 ? 'highlight' : ''}`} variants={fadeUp} whileHover={{ y: -8 }} key={name}>
             <Quote className="quote-icon" size={30} />
             <div className="stars">{Array.from({ length: 5 }).map((_, i) => <Star key={i} size={16} fill="currentColor" />)}</div>
-            <p>{quote}</p>
+            <p>"{quote}"</p>
             <div className="person">
               <span>{name.split(' ').map((n) => n[0]).join('')}</span>
               <div>
                 <strong>{name}</strong>
-                <small>{type}, {location}</small>
+                <small>{type} · {location}</small>
               </div>
             </div>
           </motion.article>
         ))}
       </motion.div>
+    </section>
+  );
+}
+
+function FAQ() {
+  const questions = [
+    'What is BetaMuv and how does it work?',
+    'Is BetaMuv available across all of Nigeria?',
+    'How is my cargo insured?',
+    'How do I pay for a delivery?',
+    'How do I sign up as a driver?',
+    'Can I cancel a booking?'
+  ];
+  return (
+    <section className="faq-section white-section" id="faq">
+      <Reveal className="section-heading center">
+        <p className="eyebrow">Got Questions?</p>
+        <h2>Frequently Asked Questions</h2>
+      </Reveal>
+      <div className="faq-list">
+        {questions.map((question) => (
+          <details key={question}>
+            <summary>{question}<ChevronRight size={20} /></summary>
+            <p>BetaMuv keeps logistics simple with verified drivers, transparent pricing, real-time tracking, and secure in-app booking.</p>
+          </details>
+        ))}
+      </div>
     </section>
   );
 }
@@ -346,12 +512,12 @@ function FinalCTA() {
         <div className="final-image"><img src={images.final} alt="Logistics truck on the move" /></div>
         <div className="final-panel">
           <div className="mega-type small">BETAMUV</div>
-          <p className="eyebrow">Ready when you are</p>
-          <h2>Let’s Get Your Cargo Moving</h2>
-          <p>Book reliable transport, track your shipment, and move goods across Nigeria with verified drivers.</p>
-          <div className="hero-actions">
-            <Button>Request a Quote</Button>
-            <Button variant="ghost-light">Download App</Button>
+          <p className="eyebrow">Ready to Move?</p>
+          <h2>Download BetaMuv.</h2>
+          <p>Join thousands of Nigerians sending goods safely and earning as verified drivers, all from one powerful, easy-to-use app.</p>
+          <div className="store-row">
+            <StoreButton store="apple" />
+            <StoreButton store="google" />
           </div>
         </div>
       </Reveal>
@@ -365,29 +531,33 @@ function Footer() {
       <div className="footer-word">BETAMUV</div>
       <div className="footer-grid">
         <div>
-          <a className="brand" href="#"><span className="brand-mark">B</span>BetaMuv</a>
-          <p>Move anything, anywhere in Nigeria with a verified logistics network built for speed, visibility, and confidence.</p>
+          <a className="brand" href="#home"><span className="brand-mark">B</span>BetaMuv</a>
+          <p>Nigeria's on-demand haulage and delivery platform. Connecting senders with verified transporters across all 36 states.</p>
         </div>
         <div>
-          <h4>Page</h4>
-          {['Home', 'About', 'Services', 'Tracking', 'Contact'].map((link) => <a href="#" key={link}>{link}</a>)}
+          <h4>Platform</h4>
+          {['How It Works', 'Features', 'For Drivers', 'Download App'].map((link) => <a href="#" key={link}>{link}</a>)}
         </div>
         <div>
-          <h4>Social</h4>
-          <a href="#"><Instagram size={17} />Instagram</a>
-          <a href="#"><Facebook size={17} />Facebook</a>
-          <a href="#"><Twitter size={17} />Twitter/X</a>
-          <a href="#"><Linkedin size={17} />LinkedIn</a>
+          <h4>Company</h4>
+          {['About BetaMuv', 'Careers', 'Press', 'Contact Us'].map((link) => <a href="#" key={link}>{link}</a>)}
         </div>
         <div className="footer-cta">
-          <h4>Need a movement plan?</h4>
-          <p>Tell us what you are moving and where it needs to go.</p>
-          <a href="#tracking">Request a Quote</a>
+          <h4>Legal</h4>
+          <a href="#">Terms of Use</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Policy</a>
+          <div className="footer-socials">
+            <Instagram size={17} />
+            <Facebook size={17} />
+            <Twitter size={17} />
+            <Linkedin size={17} />
+          </div>
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© 2026 BetaMuv. All rights reserved.</span>
-        <span>Lagos • Abuja • Port Harcourt • Kano</span>
+        <span>© 2025 Betamuv Ltd. All rights reserved.</span>
+        <span>Terms · Privacy</span>
       </div>
     </footer>
   );
@@ -398,11 +568,15 @@ export default function App() {
     <main>
       <Hero />
       <Stats />
+      <MobileAppShowcase />
       <SolutionCards />
       <ProcessSection />
       <BusinessLogistics />
+      <DriverSection />
+      <TrustSection />
       <TrackingCTA />
       <Testimonials />
+      <FAQ />
       <FinalCTA />
       <Footer />
     </main>
