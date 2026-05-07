@@ -28,11 +28,17 @@ import {
 
 const images = {
   hero: 'https://images.pexels.com/photos/26569137/pexels-photo-26569137.jpeg?auto=compress&cs=tinysrgb&w=1800',
-  port: 'https://images.unsplash.com/photo-1639359894168-2e696e6307fa?auto=format&fit=crop&w=1400&q=85',
+  port: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1400&q=85',
   truck: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=85',
   warehouse: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85',
   cargo: 'https://images.pexels.com/photos/34156526/pexels-photo-34156526.jpeg?auto=compress&cs=tinysrgb&w=1400',
-  final: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&fit=crop&w=1400&q=85'
+  final: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&fit=crop&w=1400&q=85',
+  tracking: 'https://images.pexels.com/photos/31619250/pexels-photo-31619250.jpeg?auto=compress&cs=tinysrgb&w=1800'
+};
+
+const badges = {
+  apple: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg',
+  google: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg'
 };
 
 const fadeUp = {
@@ -66,11 +72,7 @@ function StoreButton({ store }) {
   const apple = store === 'apple';
   return (
     <motion.a className="store-button" href="#download" whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
-      <span className="store-icon">{apple ? 'A' : 'G'}</span>
-      <span>
-        <small>{apple ? 'Download on the' : 'Get it on'}</small>
-        <strong>{apple ? 'App Store' : 'Google Play'}</strong>
-      </span>
+      <img src={apple ? badges.apple : badges.google} alt={apple ? 'Download on the App Store' : 'Get it on Google Play'} />
     </motion.a>
   );
 }
@@ -79,8 +81,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <a className="brand" href="#home">
-        <span className="brand-mark">B</span>
-        BetaMuv
+        <img className="brand-logo" src="/betaMuvlogo.png" alt="BetaMuv" />
       </a>
       <div className="nav-links">
         {['Home', 'How It Works', 'Features', 'For Drivers', 'FAQ'].map((item) => (
@@ -101,7 +102,7 @@ function Hero() {
   return (
     <section className="hero" id="home">
       <motion.div
-        className="hero-frame browser-frame"
+        className="hero-frame"
         initial={{ opacity: 0, scale: 0.94, y: 24 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -122,10 +123,6 @@ function Hero() {
             <motion.div variants={fadeUp} className="hero-actions">
               <Button>Download the App</Button>
               <Button href="#how-it-works" variant="ghost">See How It Works</Button>
-            </motion.div>
-            <motion.div variants={fadeUp} className="store-row">
-              <StoreButton store="apple" />
-              <StoreButton store="google" />
             </motion.div>
           </motion.div>
           <RouteMap />
@@ -430,7 +427,7 @@ function TrackingCTA() {
   return (
     <section className="tracking-wrap" id="tracking">
       <Reveal className="tracking-cta browser-frame">
-        <img src={images.port} alt="Busy shipping port with cargo containers" />
+        <img src={images.tracking} alt="Container ship docked at an illuminated port" />
         <div className="tracking-overlay" />
         <motion.div className="glass-card" animate={{ y: [0, -8, 0] }} transition={{ duration: 6, repeat: Infinity }}>
           <LocateFixed size={34} />
@@ -531,7 +528,7 @@ function Footer() {
       <div className="footer-word">BETAMUV</div>
       <div className="footer-grid">
         <div>
-          <a className="brand" href="#home"><span className="brand-mark">B</span>BetaMuv</a>
+          <a className="brand" href="#home"><img className="brand-logo" src="/betaMuvlogo.png" alt="BetaMuv" /></a>
           <p>Nigeria's on-demand haulage and delivery platform. Connecting senders with verified transporters across all 36 states.</p>
         </div>
         <div>

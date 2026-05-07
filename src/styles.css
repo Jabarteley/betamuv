@@ -1,14 +1,22 @@
 :root {
-  --orange: #cc4400;
-  --orange-2: #f06b21;
-  --navy: #071a26;
-  --navy-2: #0b1f2a;
-  --sky: #ddeff2;
-  --cream: #f8f5ef;
-  --gray: #f3f3f3;
-  --ink: #10212b;
-  --muted: #6f7d84;
-  --line: rgba(7, 26, 38, 0.12);
+  --orange: #ff5500;
+  --orange-deep: #ff5500;
+  --orange-2: #ff5500;
+  --orange-soft: #ffd6bf;
+  --yellow: #ffc300;
+  --red: #d72638;
+  --blue: #007bff;
+  --green: #00c48c;
+  --black: #000000;
+  --navy: #121212;
+  --navy-2: #000000;
+  --sky: #fff5f0;
+  --cream: #f5f5f5;
+  --gray: #e0e0e0;
+  --ink: #000000;
+  --muted: #333333;
+  --disabled: #666666;
+  --line: rgba(0, 0, 0, 0.12);
   --radius-xl: 34px;
   --radius-lg: 24px;
   --shadow: 0 34px 90px rgba(7, 26, 38, 0.16);
@@ -30,7 +38,7 @@ body {
   min-width: 320px;
   background:
     radial-gradient(circle at 12% 5%, rgba(255, 255, 255, 0.85), transparent 28rem),
-    linear-gradient(180deg, var(--sky) 0%, #eef7f8 34%, var(--cream) 100%);
+    linear-gradient(180deg, var(--sky) 0%, #ffffff 34%, var(--cream) 100%);
   overflow-x: hidden;
 }
 
@@ -58,36 +66,34 @@ section {
 }
 
 .hero {
-  padding: 22px clamp(14px, 3vw, 46px) 60px;
+  padding: 0 0 60px;
   min-height: 100vh;
 }
 
 .browser-frame {
-  border: 10px solid #050b0f;
+  border: 10px solid var(--black);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   overflow: hidden;
-  background: #050b0f;
+  background: var(--black);
 }
 
 .hero-frame {
-  max-width: 1440px;
+  max-width: none;
   margin: 0 auto;
-  min-height: calc(100vh - 52px);
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--black);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.16);
 }
 
 .browser-top {
   position: relative;
-  background: #050b0f;
+  background: transparent;
 }
 
 .window-dots {
-  position: absolute;
-  top: 23px;
-  left: 24px;
-  display: flex;
-  gap: 8px;
-  z-index: 4;
+  display: none;
 }
 
 .window-dots span {
@@ -125,15 +131,11 @@ section {
   white-space: nowrap;
 }
 
-.brand-mark {
-  width: 36px;
-  height: 36px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 10px;
-  background: var(--orange);
-  color: #fff;
-  font-weight: 900;
+.brand-logo {
+  width: auto;
+  height: 38px;
+  max-width: 155px;
+  object-fit: contain;
 }
 
 .nav-links {
@@ -166,7 +168,7 @@ section {
   color: #fff;
   padding: 0 20px;
   font-weight: 800;
-  box-shadow: 0 18px 38px rgba(204, 68, 0, 0.34);
+  box-shadow: 0 18px 38px rgba(255, 85, 0, 0.34);
 }
 
 .nav-cta {
@@ -185,10 +187,10 @@ section {
 }
 
 .hero-media {
-  min-height: calc(100vh - 72px);
+  min-height: 100vh;
   position: relative;
   isolation: isolate;
-  border-radius: 24px;
+  border-radius: 0 0 42px 42px;
   overflow: hidden;
   background: var(--navy);
 }
@@ -284,47 +286,23 @@ h1 span {
 }
 
 .store-button {
-  min-height: 58px;
   display: inline-flex;
   align-items: center;
-  gap: 11px;
-  border-radius: 17px;
-  padding: 10px 16px 10px 11px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 16px 34px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(14px);
+  border-radius: 9px;
+  padding: 0;
+  background: transparent;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
 }
 
 .store-row.dark .store-button {
-  background: #050b0f;
   box-shadow: 0 18px 38px rgba(7, 26, 38, 0.16);
 }
 
-.store-icon {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  background: var(--orange);
-  font-weight: 950;
-}
-
-.store-button small,
-.store-button strong {
+.store-button img {
   display: block;
-  line-height: 1.05;
-}
-
-.store-button small {
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.72rem;
-}
-
-.store-button strong {
-  margin-top: 4px;
-  font-size: 1rem;
+  width: auto;
+  height: 46px;
 }
 
 .mega-type {
@@ -369,7 +347,7 @@ h1 span {
   height: 12px;
   border-radius: 999px;
   background: var(--orange);
-  box-shadow: 0 0 0 9px rgba(204, 68, 0, 0.18), 0 0 26px rgba(255, 108, 36, 0.85);
+  box-shadow: 0 0 0 9px rgba(255, 85, 0, 0.18), 0 0 26px rgba(255, 85, 0, 0.85);
   offset-path: path("M80 330 C 210 190, 310 310, 410 180 S 650 95, 735 210");
 }
 
@@ -409,13 +387,13 @@ h1 span {
   height: 16px;
   border-radius: 999px;
   background: var(--orange);
-  box-shadow: 0 0 0 0 rgba(204, 68, 0, 0.7);
+  box-shadow: 0 0 0 0 rgba(255, 85, 0, 0.7);
   animation: pulse 1.8s infinite;
 }
 
 @keyframes pulse {
   70% {
-    box-shadow: 0 0 0 18px rgba(204, 68, 0, 0);
+    box-shadow: 0 0 0 18px rgba(255, 85, 0, 0);
   }
 }
 
@@ -480,7 +458,7 @@ h1 span {
   align-items: center;
   padding: clamp(82px, 11vw, 150px) clamp(18px, 5vw, 76px);
   background:
-    radial-gradient(circle at 72% 40%, rgba(204, 68, 0, 0.16), transparent 24rem),
+    radial-gradient(circle at 72% 40%, rgba(255, 85, 0, 0.16), transparent 24rem),
     linear-gradient(180deg, #fff 0%, var(--cream) 100%);
   overflow: hidden;
 }
@@ -532,7 +510,7 @@ h1 span {
   width: min(80vw, 520px);
   aspect-ratio: 1;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(204, 68, 0, 0.18), rgba(221, 239, 242, 0.55) 52%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 85, 0, 0.18), rgba(255, 245, 240, 0.68) 52%, transparent 70%);
   filter: blur(4px);
 }
 
@@ -541,9 +519,9 @@ h1 span {
   z-index: 2;
   width: min(74vw, 340px);
   min-height: 675px;
-  border: 12px solid #050b0f;
+  border: 12px solid var(--black);
   border-radius: 48px;
-  background: #050b0f;
+  background: var(--black);
   box-shadow: 0 36px 100px rgba(7, 26, 38, 0.3);
   overflow: hidden;
 }
@@ -562,7 +540,7 @@ h1 span {
   width: 92px;
   height: 24px;
   border-radius: 0 0 16px 16px;
-  background: #050b0f;
+  background: var(--black);
 }
 
 .phone-screen {
@@ -611,7 +589,7 @@ h1 span {
   background:
     linear-gradient(rgba(7, 26, 38, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(7, 26, 38, 0.08) 1px, transparent 1px),
-    linear-gradient(135deg, #d9eef1, #fff);
+    linear-gradient(135deg, var(--sky), #fff);
   background-size: 26px 26px;
 }
 
@@ -621,7 +599,7 @@ h1 span {
 }
 
 .mini-map .route-path {
-  stroke: rgba(204, 68, 0, 0.55);
+  stroke: rgba(255, 85, 0, 0.55);
 }
 
 .map-pin {
@@ -884,7 +862,7 @@ h1 span {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    radial-gradient(circle at 24% 40%, rgba(204, 68, 0, 0.35), transparent 16rem);
+    radial-gradient(circle at 24% 40%, rgba(255, 85, 0, 0.35), transparent 16rem);
   background-size: 66px 66px, 66px 66px, auto;
 }
 
@@ -931,7 +909,7 @@ h1 span {
   border-radius: 999px;
   color: #fff;
   background: var(--orange);
-  box-shadow: 0 16px 34px rgba(204, 68, 0, 0.34);
+  box-shadow: 0 16px 34px rgba(255, 85, 0, 0.34);
 }
 
 .business {
@@ -1034,7 +1012,7 @@ h1 span {
   height: 10px;
   border-radius: 999px;
   background: var(--orange);
-  box-shadow: 0 0 0 8px rgba(204, 68, 0, 0.14);
+  box-shadow: 0 0 0 8px rgba(255, 85, 0, 0.14);
 }
 
 .driver-benefits {
@@ -1184,8 +1162,9 @@ h1 span {
 }
 
 .testimonial.highlight {
-  background: var(--navy);
+  background: var(--black);
   color: #fff;
+  border-color: rgba(255, 85, 0, 0.28);
 }
 
 .testimonial p {
@@ -1322,7 +1301,7 @@ h1 span {
 .footer {
   position: relative;
   overflow: hidden;
-  background: #050b0f;
+  background: var(--black);
   color: #fff;
   padding: clamp(56px, 8vw, 90px) clamp(20px, 5vw, 78px) 28px;
 }
@@ -1450,7 +1429,7 @@ h1 span {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 12px 10px 42px;
+    padding: 0 0 42px;
   }
 
   .browser-frame {
@@ -1459,25 +1438,21 @@ h1 span {
   }
 
   .hero-frame {
-    min-height: 86vh;
+    min-height: 92vh;
   }
 
   .hero-media {
-    min-height: 86vh;
+    min-height: 92vh;
+    border-radius: 0 0 28px 28px;
   }
 
   .navbar {
     padding: 14px 14px 0 54px;
   }
 
-  .window-dots {
-    left: 16px;
-    top: 25px;
-  }
-
-  .brand-mark {
-    width: 32px;
+  .brand-logo {
     height: 32px;
+    max-width: 132px;
   }
 
   .hero-copy {
