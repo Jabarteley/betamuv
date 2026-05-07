@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 const images = {
-  hero: 'https://images.pexels.com/photos/26569137/pexels-photo-26569137.jpeg?auto=compress&cs=tinysrgb&w=1800',
+  hero: '/images/betamuv-hero-truck.png',
   port: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1400&q=85',
   truck: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1400&q=85',
   warehouse: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85',
