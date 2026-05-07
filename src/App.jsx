@@ -61,8 +61,8 @@ function Reveal({ children, className = '' }) {
 function Button({ children, variant = 'primary', href = '#download' }) {
   return (
     <motion.a href={href} className={`btn ${variant}`} whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
-      {children}
-      <ArrowRight size={17} />
+      <span>{children}</span>
+      <i><ArrowRight size={16} /></i>
     </motion.a>
   );
 }
@@ -305,7 +305,7 @@ function AboutStory() {
             BetaMuv helps users find verified drivers and transporters for safe, fast, and transparent haulage within their city and across Nigeria.
             We connect people to the right vehicle, make deliveries easy to track, and keep every trip smooth from pickup to drop-off.
           </p>
-          <Button href="#services">Learn More</Button>
+          <Button href="#services" variant="text-link">Learn More</Button>
         </div>
       </Reveal>
     </section>
@@ -434,7 +434,7 @@ function DriverSection() {
           <li>Full earnings dashboard to track your income and history</li>
           <li>Work your own schedule and be your own boss</li>
         </ul>
-        <Button>Register as a Driver</Button>
+        <Button variant="dark-primary">Register as a Driver</Button>
       </Reveal>
       <motion.div className="driver-visual" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
         <motion.div className="earnings-panel" variants={fadeUp}>
